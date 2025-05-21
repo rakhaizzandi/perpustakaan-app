@@ -38,7 +38,7 @@ Sistem informasi perpustakaan sederhana yang dibangun menggunakan Java Swing dan
 
 1. Clone repository ini
    ```bash
-   git clone https://github.com/[username]/perpustakaan-app.git
+   git clone https://github.com/rakhizzandi/perpustakaan-app.git
    cd perpustakaan-app
    ```
 
@@ -120,11 +120,3 @@ Aplikasi dilengkapi dengan data contoh yang mencakup:
    - Pastikan JDK sudah terinstall
    - Pastikan semua dependencies sudah terdownload
    - Periksa path ke MySQL Connector
-
-## Kontribusi
-
-Silakan buat pull request untuk kontribusi. Untuk perubahan besar, harap buka issue terlebih dahulu untuk mendiskusikan perubahan yang diinginkan.
-
-## Lisensi
-
-[MIT](https://choosealicense.com/licenses/mit/) 
