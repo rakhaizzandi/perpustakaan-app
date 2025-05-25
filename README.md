@@ -213,15 +213,3 @@ DAO adalah design pattern yang memisahkan logika akses data dari logika bisnis.
    - Pastikan Java sudah terinstall
    - Pastikan sudah menjalankan `compile.bat` sebelum `run.bat`
 
-## Catatan untuk Pengembang
-
-- Semua class berada dalam package `src`
-- Menggunakan MySQL sebagai database
-- Menggunakan Java Swing untuk GUI
-- Menggunakan JDBC untuk koneksi database
-
-## Kontak
-
-Jika ada pertanyaan atau masalah, silakan hubungi:
-- Email: [email Anda]
-- GitHub: [username GitHub Anda]
