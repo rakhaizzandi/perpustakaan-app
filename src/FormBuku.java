@@ -1,15 +1,18 @@
+package src;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import src.BukuDAO;
+import src.Buku;
 
 public class FormBuku extends JFrame {
     private JTextField txtJudul, txtPengarang, txtPenerbit, txtTahun, txtIsbn, txtStok;
     private JComboBox<String> cmbKategori;
     private JTable tblBuku;
     private DefaultTableModel modelTabel;
-    private JButton btnTambah, btnUpdate, btnHapus, btnClear;
+    private JButton btnTambah, btnUpdate, btnHapus, btnClear, btnKembali;
     private BukuDAO bukuDAO;
     private int selectedId = -1;
 
@@ -58,16 +61,38 @@ public class FormBuku extends JFrame {
         panelInput.add(cmbKategori);
 
         // Panel Tombol
-        JPanel panelTombol = new JPanel(new FlowLayout());
+        JPanel panelTombol = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        
+        // Style untuk button
+        Font buttonFont = new Font("Arial", Font.PLAIN, 14);
+        Dimension buttonSize = new Dimension(200, 35);
+
         btnTambah = new JButton("Tambah");
+        btnTambah.setFont(buttonFont);
+        btnTambah.setPreferredSize(buttonSize);
+
         btnUpdate = new JButton("Update");
+        btnUpdate.setFont(buttonFont);
+        btnUpdate.setPreferredSize(buttonSize);
+
         btnHapus = new JButton("Hapus");
+        btnHapus.setFont(buttonFont);
+        btnHapus.setPreferredSize(buttonSize);
+
         btnClear = new JButton("Clear");
+        btnClear.setFont(buttonFont);
+        btnClear.setPreferredSize(buttonSize);
+
+        btnKembali = new JButton("Kembali");
+        btnKembali.setFont(buttonFont);
+        btnKembali.setPreferredSize(buttonSize);
+        btnKembali.setBackground(new Color(255, 200, 200));
 
         panelTombol.add(btnTambah);
         panelTombol.add(btnUpdate);
         panelTombol.add(btnHapus);
         panelTombol.add(btnClear);
+        panelTombol.add(btnKembali);
 
         // Tabel
         String[] kolom = {"ID", "Judul", "Pengarang", "Penerbit", "Tahun", "ISBN", "Stok", "Kategori"};
@@ -86,6 +111,10 @@ public class FormBuku extends JFrame {
         btnUpdate.addActionListener(e -> updateBuku());
         btnHapus.addActionListener(e -> hapusBuku());
         btnClear.addActionListener(e -> clearForm());
+        btnKembali.addActionListener(e -> {
+            dispose();
+            new FormUtama().setVisible(true);
+        });
 
         tblBuku.addMouseListener(new MouseAdapter() {
             @Override
@@ -107,10 +136,10 @@ public class FormBuku extends JFrame {
 
     private void loadData() {
         modelTabel.setRowCount(0);
-        List<Buku> daftarBuku = bukuDAO.getAllBuku();
+        List<Buku> daftarBuku = bukuDAO.read();
         for (Buku buku : daftarBuku) {
             Object[] row = {
-                buku.getIdBuku(),
+                buku.getId(),
                 buku.getJudul(),
                 buku.getPengarang(),
                 buku.getPenerbit(),
@@ -134,7 +163,7 @@ public class FormBuku extends JFrame {
             buku.setStok(Integer.parseInt(txtStok.getText()));
             buku.setIdKategori(cmbKategori.getSelectedIndex() + 1);
 
-            if (bukuDAO.tambahBuku(buku)) {
+            if (bukuDAO.create(buku)) {
                 JOptionPane.showMessageDialog(this, "Buku berhasil ditambahkan!");
                 clearForm();
                 loadData();
@@ -154,7 +183,7 @@ public class FormBuku extends JFrame {
 
         try {
             Buku buku = new Buku();
-            buku.setIdBuku(selectedId);
+            buku.setId(selectedId);
             buku.setJudul(txtJudul.getText());
             buku.setPengarang(txtPengarang.getText());
             buku.setPenerbit(txtPenerbit.getText());
@@ -163,7 +192,7 @@ public class FormBuku extends JFrame {
             buku.setStok(Integer.parseInt(txtStok.getText()));
             buku.setIdKategori(cmbKategori.getSelectedIndex() + 1);
 
-            if (bukuDAO.updateBuku(buku)) {
+            if (bukuDAO.update(buku)) {
                 JOptionPane.showMessageDialog(this, "Buku berhasil diupdate!");
                 clearForm();
                 loadData();
@@ -187,7 +216,7 @@ public class FormBuku extends JFrame {
             JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            if (bukuDAO.hapusBuku(selectedId)) {
+            if (bukuDAO.delete(selectedId)) {
                 JOptionPane.showMessageDialog(this, "Buku berhasil dihapus!");
                 clearForm();
                 loadData();

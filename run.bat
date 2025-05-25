@@ -1,4 +1,4 @@
 @echo off
 echo Running application...
-java -cp ".;lib/*" FormUtama
+java -cp "bin;lib/*" src.FormUtama
 pause 

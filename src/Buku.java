@@ -1,5 +1,7 @@
-public class Buku {
-    private int idBuku;
+package src;
+import src.Item;
+
+public class Buku extends Item {
     private String judul;
     private String pengarang;
     private String penerbit;
@@ -9,12 +11,22 @@ public class Buku {
     private int idKategori;
     private String namaKategori;
 
-    // Constructor
-    public Buku() {}
+    // Default constructor
+    public Buku() {
+        super();
+    }
 
+    // Overloaded constructor 1
+    public Buku(String judul, String pengarang) {
+        super();
+        this.judul = judul;
+        this.pengarang = pengarang;
+    }
+
+    // Overloaded constructor 2
     public Buku(int idBuku, String judul, String pengarang, String penerbit, 
                 int tahunTerbit, String isbn, int stok, int idKategori) {
-        this.idBuku = idBuku;
+        super(idBuku, judul);
         this.judul = judul;
         this.pengarang = pengarang;
         this.penerbit = penerbit;
@@ -24,10 +36,11 @@ public class Buku {
         this.idKategori = idKategori;
     }
 
-    // Getters and Setters
-    public int getIdBuku() { return idBuku; }
-    public void setIdBuku(int idBuku) { this.idBuku = idBuku; }
+    // Getter dan Setter id khusus Buku
+    public int getIdBuku() { return getId(); }
+    public void setIdBuku(int idBuku) { setId(idBuku); }
 
+    // Getters and Setters
     public String getJudul() { return judul; }
     public void setJudul(String judul) { this.judul = judul; }
 
@@ -51,4 +64,19 @@ public class Buku {
 
     public String getNamaKategori() { return namaKategori; }
     public void setNamaKategori(String namaKategori) { this.namaKategori = namaKategori; }
+
+    // Method overloading untuk update stok
+    public void updateStok(int stok) {
+        this.stok = stok;
+    }
+
+    public void updateStok(int stok, String keterangan) {
+        this.stok = stok;
+        System.out.println("Stok diupdate: " + keterangan);
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Buku: " + judul + " oleh " + pengarang);
+    }
 } 

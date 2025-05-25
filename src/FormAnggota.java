@@ -1,15 +1,18 @@
+package src;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import src.AnggotaDAO;
+import src.Anggota;
 
 public class FormAnggota extends JFrame {
     private JTextField txtNama, txtAlamat, txtNoTelp, txtEmail;
     private JComboBox<String> cmbStatus;
     private JTable tblAnggota;
     private DefaultTableModel modelTabel;
-    private JButton btnTambah, btnUpdate, btnHapus, btnClear;
+    private JButton btnTambah, btnUpdate, btnHapus, btnClear, btnKembali;
     private AnggotaDAO anggotaDAO;
     private int selectedId = -1;
 
@@ -50,16 +53,40 @@ public class FormAnggota extends JFrame {
         panelInput.add(cmbStatus);
 
         // Panel Tombol
-        JPanel panelTombol = new JPanel(new FlowLayout());
-        btnTambah = new JButton("Tambah");
-        btnUpdate = new JButton("Update");
-        btnHapus = new JButton("Hapus");
-        btnClear = new JButton("Clear");
+        JPanel panelTombol = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        
+        // Style untuk button
+        Font buttonFont = new Font("Arial", Font.PLAIN, 14);
+        Dimension buttonSize = new Dimension(200, 35);
 
+        btnTambah = new JButton("Tambah");
+        btnTambah.setFont(buttonFont);
+        btnTambah.setPreferredSize(buttonSize);
+
+        btnUpdate = new JButton("Update");
+        btnUpdate.setFont(buttonFont);
+        btnUpdate.setPreferredSize(buttonSize);
+
+        btnHapus = new JButton("Hapus");
+        btnHapus.setFont(buttonFont);
+        btnHapus.setPreferredSize(buttonSize);
+
+        btnClear = new JButton("Clear");
+        btnClear.setFont(buttonFont);
+        btnClear.setPreferredSize(buttonSize);
+
+        btnKembali = new JButton("Kembali");
+        btnKembali.setFont(buttonFont);
+        btnKembali.setPreferredSize(buttonSize);
+        btnKembali.setBackground(new Color(255, 200, 200));
+
+        // Tambahkan tombol ke panel
         panelTombol.add(btnTambah);
         panelTombol.add(btnUpdate);
         panelTombol.add(btnHapus);
         panelTombol.add(btnClear);
+        panelTombol.add(Box.createHorizontalStrut(20)); // Spasi
+        panelTombol.add(btnKembali);
 
         // Tabel
         String[] kolom = {"ID", "Nama", "Alamat", "No. Telepon", "Email", "Status"};
@@ -78,6 +105,10 @@ public class FormAnggota extends JFrame {
         btnUpdate.addActionListener(e -> updateAnggota());
         btnHapus.addActionListener(e -> hapusAnggota());
         btnClear.addActionListener(e -> clearForm());
+        btnKembali.addActionListener(e -> {
+            dispose();
+            new FormUtama().setVisible(true);
+        });
 
         tblAnggota.addMouseListener(new MouseAdapter() {
             @Override
@@ -97,10 +128,10 @@ public class FormAnggota extends JFrame {
 
     private void loadData() {
         modelTabel.setRowCount(0);
-        List<Anggota> daftarAnggota = anggotaDAO.getAllAnggota();
+        List<Anggota> daftarAnggota = anggotaDAO.read();
         for (Anggota anggota : daftarAnggota) {
             Object[] row = {
-                anggota.getIdAnggota(),
+                anggota.getId(),
                 anggota.getNama(),
                 anggota.getAlamat(),
                 anggota.getNoTelp(),
@@ -119,7 +150,7 @@ public class FormAnggota extends JFrame {
         anggota.setEmail(txtEmail.getText());
         anggota.setStatus(cmbStatus.getSelectedItem().toString());
 
-        if (anggotaDAO.tambahAnggota(anggota)) {
+        if (anggotaDAO.create(anggota)) {
             JOptionPane.showMessageDialog(this, "Anggota berhasil ditambahkan!");
             clearForm();
             loadData();
@@ -135,14 +166,14 @@ public class FormAnggota extends JFrame {
         }
 
         Anggota anggota = new Anggota();
-        anggota.setIdAnggota(selectedId);
+        anggota.setId(selectedId);
         anggota.setNama(txtNama.getText());
         anggota.setAlamat(txtAlamat.getText());
         anggota.setNoTelp(txtNoTelp.getText());
         anggota.setEmail(txtEmail.getText());
         anggota.setStatus(cmbStatus.getSelectedItem().toString());
 
-        if (anggotaDAO.updateAnggota(anggota)) {
+        if (anggotaDAO.update(anggota)) {
             JOptionPane.showMessageDialog(this, "Anggota berhasil diupdate!");
             clearForm();
             loadData();
@@ -163,7 +194,7 @@ public class FormAnggota extends JFrame {
             JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            if (anggotaDAO.hapusAnggota(selectedId)) {
+            if (anggotaDAO.delete(selectedId)) {
                 JOptionPane.showMessageDialog(this, "Anggota berhasil dihapus!");
                 clearForm();
                 loadData();

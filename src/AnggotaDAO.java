@@ -1,16 +1,28 @@
+package src;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import src.BaseDAO;
+import src.Anggota;
 
-public class AnggotaDAO {
-    private Connection koneksi;
-
+public class AnggotaDAO extends BaseDAO implements CRUDOperations<Anggota> {
+    
     public AnggotaDAO() {
-        this.koneksi = Koneksi.getKoneksi();
+        super();
     }
 
-    // Create
-    public boolean tambahAnggota(Anggota anggota) {
+    @Override
+    protected String getTableName() {
+        return "anggota";
+    }
+
+    @Override
+    protected String getPrimaryKey() {
+        return "id_anggota";
+    }
+
+    @Override
+    public boolean create(Anggota anggota) {
         String sql = "INSERT INTO anggota (nama, alamat, no_telp, email, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, anggota.getNama());
@@ -25,15 +37,15 @@ public class AnggotaDAO {
         }
     }
 
-    // Read
-    public List<Anggota> getAllAnggota() {
+    @Override
+    public List<Anggota> read() {
         List<Anggota> daftarAnggota = new ArrayList<>();
         String sql = "SELECT * FROM anggota";
         try (Statement stmt = koneksi.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Anggota anggota = new Anggota();
-                anggota.setIdAnggota(rs.getInt("id_anggota"));
+                anggota.setId(rs.getInt("id_anggota"));
                 anggota.setNama(rs.getString("nama"));
                 anggota.setAlamat(rs.getString("alamat"));
                 anggota.setNoTelp(rs.getString("no_telp"));
@@ -47,8 +59,8 @@ public class AnggotaDAO {
         return daftarAnggota;
     }
 
-    // Update
-    public boolean updateAnggota(Anggota anggota) {
+    @Override
+    public boolean update(Anggota anggota) {
         String sql = "UPDATE anggota SET nama=?, alamat=?, no_telp=?, email=?, status=? WHERE id_anggota=?";
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, anggota.getNama());
@@ -56,7 +68,7 @@ public class AnggotaDAO {
             ps.setString(3, anggota.getNoTelp());
             ps.setString(4, anggota.getEmail());
             ps.setString(5, anggota.getStatus());
-            ps.setInt(6, anggota.getIdAnggota());
+            ps.setInt(6, anggota.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error update anggota: " + e.getMessage());
@@ -64,11 +76,11 @@ public class AnggotaDAO {
         }
     }
 
-    // Delete
-    public boolean hapusAnggota(int idAnggota) {
+    @Override
+    public boolean delete(int id) {
         String sql = "DELETE FROM anggota WHERE id_anggota=?";
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
-            ps.setInt(1, idAnggota);
+            ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error hapus anggota: " + e.getMessage());
@@ -76,8 +88,8 @@ public class AnggotaDAO {
         }
     }
 
-    // Search
-    public List<Anggota> cariAnggota(String keyword) {
+    @Override
+    public List<Anggota> search(String keyword) {
         List<Anggota> hasil = new ArrayList<>();
         String sql = "SELECT * FROM anggota WHERE nama LIKE ? OR email LIKE ? OR no_telp LIKE ?";
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
@@ -88,7 +100,7 @@ public class AnggotaDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Anggota anggota = new Anggota();
-                anggota.setIdAnggota(rs.getInt("id_anggota"));
+                anggota.setId(rs.getInt("id_anggota"));
                 anggota.setNama(rs.getString("nama"));
                 anggota.setAlamat(rs.getString("alamat"));
                 anggota.setNoTelp(rs.getString("no_telp"));

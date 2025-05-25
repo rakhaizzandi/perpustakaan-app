@@ -1,67 +1,79 @@
 # Sistem Informasi Perpustakaan
 
-Sistem informasi perpustakaan sederhana yang dibangun menggunakan Java Swing dan MySQL. Aplikasi ini memungkinkan pengguna untuk mengelola data buku dan anggota perpustakaan.
+Aplikasi desktop sederhana untuk mengelola data perpustakaan menggunakan Java Swing dan MySQL. Aplikasi ini memungkinkan pengguna untuk mengelola data buku dan anggota perpustakaan.
 
-## 🚀 Fitur
+## Fitur Aplikasi
 
-### 1. Manajemen Buku
-- ✅ Tambah buku baru
-- ✅ Lihat daftar buku
-- ✅ Update data buku
-- ✅ Hapus buku
-- ✅ Cari buku berdasarkan judul, pengarang, atau penerbit
-- ✅ Kategorisasi buku
+1. **Manajemen Buku**
+   - ✅ Tambah buku baru
+   - ✅ Lihat daftar buku
+   - ✅ Update data buku
+   - ✅ Hapus buku
+   - ✅ Cari buku berdasarkan judul, pengarang, atau penerbit
+   - ✅ Kategorisasi buku
 
-### 2. Manajemen Anggota
-- ✅ Tambah anggota baru
-- ✅ Lihat daftar anggota
-- ✅ Update data anggota
-- ✅ Hapus anggota
-- ✅ Cari anggota berdasarkan nama, email, atau nomor telepon
-- ✅ Status keanggotaan (aktif/nonaktif)
+2. **Manajemen Anggota**
+   - ✅ Tambah anggota baru
+   - ✅ Lihat daftar anggota
+   - ✅ Update data anggota
+   - ✅ Hapus anggota
+   - ✅ Cari anggota berdasarkan nama, email, atau nomor telepon
+   - ✅ Status keanggotaan (aktif/nonaktif)
 
-## 🛠️ Teknologi yang Digunakan
+## Cara Menjalankan Aplikasi
 
-- Java SE 8
-- Java Swing untuk GUI
-- MySQL Database
-- JDBC untuk koneksi database
-- Maven untuk manajemen dependencies
+### Persyaratan
+- Java JDK 8 atau lebih baru
+- MySQL Server
+- MySQL Connector/J (sudah ada di folder `lib`)
 
-## 📋 Persyaratan Sistem
+### Langkah-langkah Menjalankan
 
-1. Java Development Kit (JDK) 8 atau lebih tinggi
-2. MySQL Server (XAMPP)
-3. MySQL Connector/J (JDBC Driver)
-4. Maven (opsional)
+1. **Persiapkan Database**
+   - Buka MySQL Server
+   - Buat database baru dengan nama `perpustakaan`
+   - Import file `database.sql` ke database tersebut
 
-## 🚀 Cara Instalasi
+2. **Compile Program**
+   - Double click file `compile.bat`
+   - Tunggu sampai muncul pesan "Compilation complete!"
+   - File hasil kompilasi akan disimpan di folder `bin`
 
-1. Clone repository ini
-   ```bash
-   git clone https://github.com/username/perpustakaan-app.git
-   ```
+3. **Jalankan Aplikasi**
+   - Double click file `run.bat`
+   - Aplikasi akan terbuka dengan tampilan menu utama
 
-2. Import database
-   - Buka XAMPP Control Panel
-   - Start Apache dan MySQL
-   - Buka phpmyadmin (http://localhost/phpmyadmin)
-   - Import file `perpustakaan.sql`
+## Struktur Folder
 
-3. Konfigurasi database
-   - Buka file `src/Koneksi.java`
-   - Sesuaikan konfigurasi database jika diperlukan:
-     ```java
-     String url = "jdbc:mysql://localhost:3306/perpustakaan";
-     String user = "root";
-     String password = "";
-     ```
+```
+perpustakaan/
+├── bin/              # Folder untuk file hasil kompilasi
+├── lib/              # Folder untuk library yang dibutuhkan
+├── src/              # Folder untuk file source code
+├── compile.bat       # Script untuk mengkompilasi program
+├── run.bat          # Script untuk menjalankan program
+└── database.sql     # File SQL untuk membuat database
+```
 
-4. Compile dan jalankan
-   - Double click `compile.bat` untuk mengkompilasi
-   - Double click `run.bat` untuk menjalankan program
+## Penjelasan File Penting
 
-## 📁 Struktur Database
+1. **FormUtama.java**
+   - Tampilan menu utama
+   - Berisi tombol untuk membuka form buku dan anggota
+
+2. **FormBuku.java**
+   - Tampilan manajemen buku
+   - Fitur CRUD untuk data buku
+
+3. **FormAnggota.java**
+   - Tampilan manajemen anggota
+   - Fitur CRUD untuk data anggota
+
+4. **Koneksi.java**
+   - Mengatur koneksi ke database MySQL
+   - Konfigurasi database ada di sini
+
+## Struktur Database
 
 ### Tabel Kategori
 - id_kategori (INT, Primary Key)
@@ -85,95 +97,131 @@ Sistem informasi perpustakaan sederhana yang dibangun menggunakan Java Swing dan
 - email (VARCHAR)
 - status (ENUM)
 
-## 💻 Penggunaan
-
-1. Jalankan aplikasi dengan menjalankan `FormUtama.java`
-2. Pilih menu yang diinginkan:
-   - Manajemen Buku
-   - Manajemen Anggota
-3. Gunakan form yang muncul untuk melakukan operasi CRUD
-
-## 🛠️ Pengembangan
-
-### Menambahkan Fitur Baru
-1. Fork repository ini
-2. Buat branch baru (`git checkout -b fitur-baru`)
-3. Commit perubahan Anda (`git commit -m 'Menambahkan fitur baru'`)
-4. Push ke branch (`git push origin fitur-baru`)
-5. Buat Pull Request
-
-### Melaporkan Bug
-Jika Anda menemukan bug, silakan buat issue di repository ini dengan format:
-- Deskripsi bug
-- Langkah-langkah untuk mereproduksi bug
-- Screenshot (jika ada)
-- Environment (OS, Java version, dll)
-
-## 🎯 Prinsip Pemrograman Berorientasi Objek (PBO)
+## Prinsip Pemrograman Berorientasi Objek (PBO)
 
 ### 1. Encapsulation (Enkapsulasi)
 - **Lokasi**: Class `Buku.java` dan `Anggota.java`
 - **Penjelasan**: Implementasi enkapsulasi terlihat pada penggunaan private attributes dengan getter dan setter methods
-- **Contoh**:
+- **Contoh di Buku.java**:
   ```java
-  private int idBuku;
   private String judul;
-  // Getter dan setter methods
-  public int getIdBuku() { return idBuku; }
-  public void setIdBuku(int idBuku) { this.idBuku = idBuku; }
+  private String pengarang;
+  public String getJudul() { return judul; }
+  public void setJudul(String judul) { this.judul = judul; }
   ```
 
 ### 2. Inheritance (Pewarisan)
-- **Lokasi**: Class `Item.java` (abstract class) dan `Buku.java` (child class)
-- **Penjelasan**: Implementasi inheritance dengan class `Item` sebagai parent class dan `Buku` sebagai child class
+- **Lokasi**: 
+  - `BaseModel.java` (abstract class) sebagai parent class
+  - `Buku.java` dan `Anggota.java` sebagai child class
+- **Penjelasan**: Implementasi inheritance dengan class `BaseModel` sebagai parent class
 - **Contoh**:
   ```java
-  public abstract class Item {
+  public abstract class BaseModel {
       protected int id;
       protected String nama;
   }
   
-  public class Buku extends Item {
-      // Child class implementation
+  public class Buku extends BaseModel {
+      // Implementasi spesifik untuk Buku
   }
   ```
 
 ### 3. Polymorphism (Polimorfisme)
-- **Lokasi**: Interface `CRUDOperations` dan implementasinya di `BukuDAO.java` dan `AnggotaDAO.java`
+- **Lokasi**: 
+  - Interface `CRUDOperations<T>`
+  - Implementasi di `BukuDAO.java` dan `AnggotaDAO.java`
 - **Penjelasan**: Implementasi polymorphism melalui interface dan method overriding
 - **Contoh**:
   ```java
-  public interface CRUDOperations {
-      boolean create(Object obj);
-      List<Object> read();
+  public interface CRUDOperations<T> {
+      boolean create(T obj);
+      List<T> read();
   }
   ```
 
 ### 4. Overloading (Overloading Method)
 - **Lokasi**: Class `Buku.java` dan `Anggota.java`
-- **Penjelasan**: Implementasi method overloading dengan multiple constructor dan methods dengan nama sama
-- **Contoh**:
+- **Penjelasan**: Implementasi method overloading dengan multiple constructor
+- **Contoh di Buku.java**:
   ```java
-  public Buku() {} // Default constructor
-  public Buku(String judul, String pengarang) { // Overloaded constructor
-      this.judul = judul;
-      this.pengarang = pengarang;
-  }
+  public Buku() { super(); }
+  public Buku(String judul, String pengarang) { /* ... */ }
+  public void updateStok(int stok) { /* ... */ }
+  public void updateStok(int stok, String keterangan) { /* ... */ }
   ```
 
 ### 5. Abstraction (Abstraksi)
-- **Lokasi**: Abstract class `BaseDAO.java` dan `Item.java`
+- **Lokasi**: 
+  - Abstract class `BaseModel.java` dan `BaseDAO.java`
+  - Interface `CRUDOperations.java`
 - **Penjelasan**: Implementasi abstraction melalui abstract class dan interface
 - **Contoh**:
   ```java
   public abstract class BaseDAO {
       protected Connection koneksi;
-      public abstract boolean create(Object obj);
+      protected abstract String getTableName();
   }
   ```
 
-## 🙏 Ucapan Terima Kasih
+## Penjelasan DAO (Data Access Object)
 
-- Terima kasih kepada semua kontributor
-- Terima kasih kepada komunitas open source
-- Terima kasih kepada pengguna aplikasi ini 
+DAO adalah design pattern yang memisahkan logika akses data dari logika bisnis.
+
+### Struktur DAO
+1. **Interface CRUDOperations**
+   - Mendefinisikan operasi dasar database (Create, Read, Update, Delete)
+   - Menggunakan generic type `<T>` untuk fleksibilitas
+
+2. **Abstract Class BaseDAO**
+   - Menyediakan koneksi database
+   - Mendefinisikan method abstrak untuk nama tabel dan primary key
+
+3. **Implementasi DAO**
+   - `BukuDAO`: Menangani operasi database untuk entitas Buku
+   - `AnggotaDAO`: Menangani operasi database untuk entitas Anggota
+
+### Keuntungan Menggunakan DAO
+1. **Pemisahan Layer**
+   - Memisahkan logika database dari logika bisnis
+   - Memudahkan maintenance dan testing
+
+2. **Reusability**
+   - Kode dapat digunakan kembali untuk entitas lain
+   - Mengurangi duplikasi kode
+
+3. **Fleksibilitas**
+   - Mudah mengganti implementasi database
+   - Mendukung multiple database
+
+4. **Type Safety**
+   - Menggunakan generic type untuk type checking
+   - Mengurangi error runtime
+
+## Troubleshooting
+
+1. **Error "Cannot find symbol"**
+   - Pastikan sudah menjalankan `compile.bat`
+   - Pastikan semua file `.java` ada di folder `src`
+
+2. **Error Koneksi Database**
+   - Pastikan MySQL Server sudah berjalan
+   - Pastikan database `perpustakaan` sudah dibuat
+   - Cek konfigurasi di `Koneksi.java`
+
+3. **Aplikasi Tidak Mau Buka**
+   - Pastikan Java sudah terinstall
+   - Pastikan sudah menjalankan `compile.bat` sebelum `run.bat`
+
+## Catatan untuk Pengembang
+
+- Semua class berada dalam package `src`
+- Menggunakan MySQL sebagai database
+- Menggunakan Java Swing untuk GUI
+- Menggunakan JDBC untuk koneksi database
+
+## Kontak
+
+Jika ada pertanyaan atau masalah, silakan hubungi:
+- Email: [email Anda]
+- GitHub: [username GitHub Anda]
