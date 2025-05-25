@@ -21,4 +21,21 @@ public class Koneksi {
         }
         return koneksi;
     }
+}
+
+// Parent class
+public abstract class Item {
+    protected int id;
+    protected String nama;
+    
+    public abstract void displayInfo();
+}
+
+// Child class
+public class Buku extends Item {
+    // existing attributes
+    @Override
+    public void displayInfo() {
+        System.out.println("Buku: " + judul + " oleh " + pengarang);
+    }
 } 

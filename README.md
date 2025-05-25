@@ -109,6 +109,68 @@ Jika Anda menemukan bug, silakan buat issue di repository ini dengan format:
 - Screenshot (jika ada)
 - Environment (OS, Java version, dll)
 
+## 🎯 Prinsip Pemrograman Berorientasi Objek (PBO)
+
+### 1. Encapsulation (Enkapsulasi)
+- **Lokasi**: Class `Buku.java` dan `Anggota.java`
+- **Penjelasan**: Implementasi enkapsulasi terlihat pada penggunaan private attributes dengan getter dan setter methods
+- **Contoh**:
+  ```java
+  private int idBuku;
+  private String judul;
+  // Getter dan setter methods
+  public int getIdBuku() { return idBuku; }
+  public void setIdBuku(int idBuku) { this.idBuku = idBuku; }
+  ```
+
+### 2. Inheritance (Pewarisan)
+- **Lokasi**: Class `Item.java` (abstract class) dan `Buku.java` (child class)
+- **Penjelasan**: Implementasi inheritance dengan class `Item` sebagai parent class dan `Buku` sebagai child class
+- **Contoh**:
+  ```java
+  public abstract class Item {
+      protected int id;
+      protected String nama;
+  }
+  
+  public class Buku extends Item {
+      // Child class implementation
+  }
+  ```
+
+### 3. Polymorphism (Polimorfisme)
+- **Lokasi**: Interface `CRUDOperations` dan implementasinya di `BukuDAO.java` dan `AnggotaDAO.java`
+- **Penjelasan**: Implementasi polymorphism melalui interface dan method overriding
+- **Contoh**:
+  ```java
+  public interface CRUDOperations {
+      boolean create(Object obj);
+      List<Object> read();
+  }
+  ```
+
+### 4. Overloading (Overloading Method)
+- **Lokasi**: Class `Buku.java` dan `Anggota.java`
+- **Penjelasan**: Implementasi method overloading dengan multiple constructor dan methods dengan nama sama
+- **Contoh**:
+  ```java
+  public Buku() {} // Default constructor
+  public Buku(String judul, String pengarang) { // Overloaded constructor
+      this.judul = judul;
+      this.pengarang = pengarang;
+  }
+  ```
+
+### 5. Abstraction (Abstraksi)
+- **Lokasi**: Abstract class `BaseDAO.java` dan `Item.java`
+- **Penjelasan**: Implementasi abstraction melalui abstract class dan interface
+- **Contoh**:
+  ```java
+  public abstract class BaseDAO {
+      protected Connection koneksi;
+      public abstract boolean create(Object obj);
+  }
+  ```
 
 ## 🙏 Ucapan Terima Kasih
 
